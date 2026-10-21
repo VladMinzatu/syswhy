@@ -38,6 +38,10 @@ internal/adapters/ implementations of ports (e.g. host/, ig/) and driving
 
 ## Build & run (Docker only)
 
+Dev target for now: arm64, Docker via OrbStack on macOS. The product targets
+real modern Linux hosts: never design around OrbStack limitations; flag them
+explicitly instead.
+
 No host Go toolchain is assumed. All builds and tests run in Docker; the
 Makefile is a thin wrapper over `docker build`/`docker run`.
 
