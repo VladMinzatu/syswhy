@@ -2,7 +2,10 @@ module github.com/VladMinzatu/syswhy
 
 go 1.27.3
 
-require charm.land/bubbletea/v2 v2.1.0
+require (
+	charm.land/bubbletea/v2 v2.1.0
+	golang.org/x/sys v0.47.0
+)
 
 require (
 	github.com/charmbracelet/colorprofile v0.4.3 // indirect
@@ -19,5 +22,4 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/xo/terminfo v1.0.0 // indirect
 	golang.org/x/sync v0.22.0 // indirect
-	golang.org/x/sys v0.47.0 // indirect
 )
