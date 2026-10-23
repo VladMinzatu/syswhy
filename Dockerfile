@@ -15,7 +15,7 @@ FROM base AS test
 RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=bind,target=. \
-    go vet ./... && go test ./...
+    go vet ./... && go test -timeout 60s ./...
 
 FROM base AS build
 RUN --mount=type=cache,target=/go/pkg/mod \
