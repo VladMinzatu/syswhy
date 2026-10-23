@@ -89,8 +89,15 @@ Build pipeline (Dockerfile stages):
   strip the foreign architecture, or compress and unpack at startup.
 - Large dependency tree: ~45 s cold builds, mitigated by BuildKit caches.
 
-## To verify when building the pipeline
+## Verified while building the pipeline
 
-- That `ig image pull` verifies signatures (confirmed only for `ig run`).
-- Which architectures `ig image build` produces for our gadgets.
-- Startup time with embedded gadgets.
+- `ig image pull` does not verify signatures; `ig image verify` does (it
+  rejects unsigned images), so the build runs it after each pull. Pulling by
+  digest stores the image untagged, so the build pulls by tag and compares
+  the digest with the pin.
+- IG's `host.Init` (called by the local runtime) calls `os.Exit` when debugfs
+  or tracefs is missing. The adapter checks these first and returns an
+  error; the readiness checks include debugfs.
+
+Still open: which architectures `ig image build` produces for our gadgets,
+and startup time with embedded gadgets.

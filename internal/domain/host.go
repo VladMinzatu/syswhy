@@ -14,6 +14,7 @@ type HostInfo struct {
 	KernelRelease string
 	BTF           bool   // kernel BTF type information is available
 	BPFFS         bool   // the BPF filesystem is mounted at /sys/fs/bpf
+	DebugFS       bool   // debugfs is mounted at /sys/kernel/debug
 	TraceFS       bool   // tracefs is reachable
 	EffectiveCaps uint64 // effective capability bitmask of this process
 }
@@ -55,6 +56,8 @@ func Assess(h HostInfo) Readiness {
 				"kernel lacks /sys/kernel/btf/vmlinux (needs CONFIG_DEBUG_INFO_BTF)"),
 			check("BPF filesystem", h.BPFFS,
 				"mount it: -v /sys/fs/bpf:/sys/fs/bpf"),
+			check("debugfs", h.DebugFS,
+				"mount it: -v /sys/kernel/debug:/sys/kernel/debug"),
 			check("tracefs", h.TraceFS,
 				"mount it: -v /sys/kernel/tracing:/sys/kernel/tracing"),
 			check("eBPF privileges", h.HasCap(CapSysAdmin) || (h.HasCap(CapBPF) && h.HasCap(CapPerfmon)),

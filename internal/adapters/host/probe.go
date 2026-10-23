@@ -42,10 +42,15 @@ func (p Probe) Probe(context.Context) (domain.HostInfo, error) {
 	if err != nil {
 		return domain.HostInfo{}, err
 	}
+	debugfs, err := p.mounted("/sys/kernel/debug", "debugfs")
+	if err != nil {
+		return domain.HostInfo{}, err
+	}
 	return domain.HostInfo{
 		KernelRelease: strings.TrimSpace(string(release)),
 		BTF:           p.exists("sys/kernel/btf/vmlinux"),
 		BPFFS:         bpffs,
+		DebugFS:       debugfs,
 		// Stat rather than the mount table: tracefs under debugfs is automounted on access.
 		TraceFS: p.exists("sys/kernel/tracing/available_events") ||
 			p.exists("sys/kernel/debug/tracing/available_events"),

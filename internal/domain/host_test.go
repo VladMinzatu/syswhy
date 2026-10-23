@@ -15,6 +15,7 @@ func readyHost() HostInfo {
 		KernelRelease: "6.8.0",
 		BTF:           true,
 		BPFFS:         true,
+		DebugFS:       true,
 		TraceFS:       true,
 		EffectiveCaps: caps(CapSysAdmin),
 	}
@@ -38,6 +39,7 @@ func TestAssessFailingCheck(t *testing.T) {
 	}{
 		{"no BTF", func(h *HostInfo) { h.BTF = false }, "BTF type information"},
 		{"no bpffs", func(h *HostInfo) { h.BPFFS = false }, "BPF filesystem"},
+		{"no debugfs", func(h *HostInfo) { h.DebugFS = false }, "debugfs"},
 		{"no tracefs", func(h *HostInfo) { h.TraceFS = false }, "tracefs"},
 		{"no caps", func(h *HostInfo) { h.EffectiveCaps = 0 }, "eBPF privileges"},
 		{"CAP_BPF without CAP_PERFMON", func(h *HostInfo) { h.EffectiveCaps = caps(CapBPF) }, "eBPF privileges"},

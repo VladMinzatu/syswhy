@@ -1,0 +1,4 @@
+# Inspektor Gadget gadgets embedded in syswhy, pinned by digest.
+# Tags must match the IG version in go.mod (the build fails otherwise), and
+# signatures are verified at build time with `ig image verify`.
+trace_exec:v0.57.0@sha256:9182278eb6a11b6e2d59a748674b646a8512b715d3563ec3afdf340a2f55d435

@@ -42,6 +42,12 @@ Dev target for now: arm64, Docker via OrbStack on macOS. The product targets
 real modern Linux hosts: never design around OrbStack limitations; flag them
 explicitly instead.
 
+Known OrbStack limitations:
+
+- `--pid=host` gives Docker's PID namespace, which is nested: eBPF reports
+  PIDs from the kernel's initial namespace, so they don't match `/proc` in
+  the container. Tests checking PIDs run only in the initial namespace.
+
 No host Go toolchain is assumed. All builds and tests run in Docker; the
 Makefile is a thin wrapper over `docker build`/`docker run`.
 

@@ -17,7 +17,8 @@ func fullHost() fstest.MapFS {
 		"proc/sys/kernel/osrelease": file("6.8.0-generic\n"),
 		"proc/self/status":          file("Name:\tsyswhy\nCapEff:\t000001ffffffffff\n"),
 		"proc/self/mounts": file("sysfs /sys sysfs rw 0 0\n" +
-			"bpf /sys/fs/bpf bpf rw,mode=700 0 0\n"),
+			"bpf /sys/fs/bpf bpf rw,mode=700 0 0\n" +
+			"debugfs /sys/kernel/debug debugfs rw 0 0\n"),
 		"sys/kernel/btf/vmlinux":              file(""),
 		"sys/kernel/tracing/available_events": file(""),
 	}
@@ -32,6 +33,7 @@ func TestProbeFullHost(t *testing.T) {
 		KernelRelease: "6.8.0-generic",
 		BTF:           true,
 		BPFFS:         true,
+		DebugFS:       true,
 		TraceFS:       true,
 		EffectiveCaps: 0x1ffffffffff,
 	}
@@ -50,7 +52,7 @@ func TestProbeBareHost(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if got.BTF || got.BPFFS || got.TraceFS {
+	if got.BTF || got.BPFFS || got.DebugFS || got.TraceFS {
 		t.Errorf("expected nothing available, got %+v", got)
 	}
 	if got.EffectiveCaps != 0xa80425fb {

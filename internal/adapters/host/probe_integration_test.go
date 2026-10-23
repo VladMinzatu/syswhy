@@ -52,6 +52,9 @@ func TestIntegrationProbe(t *testing.T) {
 	if got.BPFFS != privileged {
 		t.Errorf("BPFFS = %v, want %v", got.BPFFS, privileged)
 	}
+	if got.DebugFS != privileged {
+		t.Errorf("DebugFS = %v, want %v", got.DebugFS, privileged)
+	}
 	if got.TraceFS != privileged {
 		t.Errorf("TraceFS = %v, want %v", got.TraceFS, privileged)
 	}
