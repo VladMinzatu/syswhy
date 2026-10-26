@@ -1,7 +1,12 @@
 # syswhy
 
-Interactive TUI for performance diagnostics on a single Linux node, built on
-Inspektor Gadget (IG). Go + Bubble Tea.
+TUI cockpit for observability on a single Linux node: it manages observability
+"tools" implemented by various backends (Inspektor Gadget, bpftrace, built-in
+modules) and shows what eBPF programs are loaded. Primarily an integration
+project; our own modules may come later. Go + Bubble Tea.
+
+Current state: a bare TUI shell with no backends; domain and abstractions are
+still to be designed.
 
 ## Working agreement
 
@@ -20,8 +25,8 @@ Inspektor Gadget (IG). Go + Bubble Tea.
 cmd/syswhy/        wiring only: build adapters, inject into app, start TUI
 internal/domain/   pure types and logic; no IG, TUI, or OS imports
 internal/app/      use cases; defines ports (interfaces) it needs
-internal/adapters/ implementations of ports (e.g. host/, ig/) and driving
-                   adapters (tui/)
+internal/adapters/ implementations of ports (e.g. one per backend) and
+                   driving adapters (tui/)
 ```
 
 - Dependencies point inward: adapters -> app -> domain. Never the reverse.
